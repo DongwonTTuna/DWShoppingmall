@@ -1,30 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import axios from "axios";
 import Logo from '../logo.png'
 
 export default function Login() {
-  const [id, setId] = useState("");
-  const [passwd, setPasswd] = useState("");
-  const Nav = useNavigate();
+  const [id, setId] = useState("")
+  const [passwd, setPasswd] = useState("")
+  const Nav = useNavigate()
+  const [,setCookie,] = useCookies(["login"])
+  const [rememberID, setRememberID] = useState(false)
+  const [toggle,setToggle] = useState(false)
   const DoLogin = () => {
+    axios.defaults.withCredentials = true;
+    if (id.length <= 6 || passwd.length <= 8){
+      return
+    }
     axios
-      .post("http://localhost/php/dongwonmall/login.php", {
+      .post("http://localhost:4000/login", {
         id: id,
         passwd: passwd,
-      })
+      },)
       .then((response) => {
-        console.log(response.data.res);
-        switch (response.data.res) {
+        switch (response.data.status) {
           case 1:
+            setCookie("login", response.data.data,{path:'/',maxAge: 7200, sameSite:'strict'});
+            if (toggle){
+              localStorage.setItem("rememberlogin", id)
+            } else{
+              localStorage.removeItem("rememberlogin")
+            }
+            
             Nav("/");
             break;
           default:
-            Nav("/login/failed");
             break;
         }
       });
   };
+
+  const ToggleRemember = () => {
+    setRememberID(!rememberID);
+  }
+
+  const ToggleRememberMe = () => {
+    setToggle(!toggle)
+  }
+
+  useEffect(()=> {
+    const a = localStorage.getItem("rememberlogin")
+    if (a !== null){
+      setToggle(true)
+      setId(a)
+    }
+
+  },[])
 
   return (
     <section className="bg-[#F4F7FF] py-20 h-screen flex justify-center items-center">
@@ -75,6 +105,7 @@ export default function Login() {
                         focus-visible:shadow-none
                         focus:border-blue-500
                         "
+                value={id}
               />
             </div>
             
@@ -98,14 +129,16 @@ export default function Login() {
                         focus-visible:shadow-none
                         focus:border-blue-500
                         "
+                value={passwd}
               />
             </div>
             <div className="flex justify-between my-6">
-              <div className="">
-                <label><input type="Checkbox" className="mr-4" />
+              <div className="text-[#adadad] hover:text-black ">
+                <label><input type="Checkbox" onClick={() => ToggleRememberMe()} onChange={() => ToggleRemember()} checked={toggle} className="mr-4" />
               IDを覚える</label>
               </div>
               <div
+              onClick={() => Nav("/login/resetpassword")}
               className="
                     text-sm
                     inline-block
@@ -223,6 +256,7 @@ export default function Login() {
               text-[#adadad]
               hover:text-black
               "
+              onClick={() => Nav('/register')}
             >
               登録
             </button>
