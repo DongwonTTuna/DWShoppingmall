@@ -5,6 +5,15 @@ create user 'dongwon'@'localhost' identified WITH mysql_native_password by 'this
 grant all on dongwonmall.* to 'dongwon'@'localhost';
 use dongwonmall;
 
+create table login_table(
+    id int auto_increment primary key,
+    loginid varchar(255) not null,
+    passwd varchar(255) not null,
+    nickname varchar(255) not null,
+    expires int,
+    randomid int
+);
+
 create table user_detail(
     id int auto_increment primary key,
     cart varchar(999), 
@@ -12,15 +21,6 @@ create table user_detail(
     order_price varchar(999)
 );
 
-create table login_table(
-    id int auto_increment primary key,
-    loginid varchar(255) not null,
-    passwd varchar(255) not null,
-    nickname varchar(255) not null,
-    expires int,
-    randomid int,
-    foreign key(id) references user_detail(id) on delete restrict
-);
 
 create table product(
     p_id int auto_increment primary key,
@@ -29,8 +29,8 @@ create table product(
     p_description varchar(255) not null
 );
 
-insert into user_detail values(null, null,null,null);
 insert into login_table values(null, 'ttuna0790@gmail.com', 'thisismypassword', 'ピーナツ', null, null);
+insert into user_detail values(null, null,null,null);
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS Regestoration $$

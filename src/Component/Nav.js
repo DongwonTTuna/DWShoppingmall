@@ -14,18 +14,13 @@ export default function Navi(){
                 <button onClick={()=> Nav('/login')} className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-gray-600 whitespace-no-wrap bg-white border border-gray-200 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:shadow-none">
                 ログイン
                 </button>
-                <span className="inline-flex rounded-md shadow-sm">
-                    <button className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-blue-600 border border-blue-700 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    登録 
-                    </button>
-                </span>
             </div>)
         }
         a = JSON.parse(a)
         p.current = a['nickname']
         SetCheckLogin(
-            <div onMouseOver={() => onHover()}  className="border h-16 rounded-md shadow-md whitespace-nowrap text-center">
-                <><p className="mt-2" >いらっしゃいませ</p><p>{p.current}様</p></>
+            <div onMouseOver={() => onHover()}  className="border h-16 rounded-md shadow-md whitespace-nowrap text-center flex items-center justify-center">
+                <p>{p.current}様</p>
             </div>
         )
         //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,8 +47,8 @@ export default function Navi(){
     }
     const onOut = () =>{
         SetCheckLogin(
-            <div onMouseOver={() => onHover()}  className="border h-16 rounded-md shadow-md whitespace-nowrap text-center">
-                <><p className="mt-2" >いらっしゃいませ</p><p>{p.current}様</p></>
+            <div onMouseOver={() => onHover()}  className="border h-16 rounded-md shadow-md whitespace-nowrap text-center flex items-center justify-center">
+                <><p>{p.current}様</p></>
             </div>
         )
     }
@@ -79,6 +74,7 @@ export default function Navi(){
             </div>
             <div className=" w-44">{CheckLogindata}</div>
         </div>
+        <hr className="mx-auto max-w-7xl" />
     </section>
     );
 }

@@ -11,6 +11,8 @@ export default function Login() {
   const [,setCookie,] = useCookies(["login"])
   const [rememberID, setRememberID] = useState(false)
   const [toggle,setToggle] = useState(false)
+  
+
   const DoLogin = () => {
     axios.defaults.withCredentials = true;
     if (id.length <= 6 || passwd.length <= 8){
@@ -18,12 +20,14 @@ export default function Login() {
     }
     axios
       .post("http://localhost:4000/login", {
-        id: id,
+        email: id,
         passwd: passwd,
       },)
       .then((response) => {
         switch (response.data.status) {
           case 1:
+            Object.assign(response.data.data,{'password': passwd})
+            console.log(response.data.data)
             setCookie("login", response.data.data,{path:'/',maxAge: 7200, sameSite:'strict'});
             if (toggle){
               localStorage.setItem("rememberlogin", id)
@@ -87,7 +91,7 @@ export default function Login() {
           </div>
             <div className="mb-6">
               <input
-                type="text"
+                type="email"
                 onChange={(e) => setId(e.target.value) }
                 onKeyDown={(e) => {if(e.key ==='Enter'){DoLogin()}}}
                 placeholder="Eメール"

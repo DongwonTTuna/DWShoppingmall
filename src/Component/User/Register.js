@@ -1,10 +1,36 @@
+import axios from 'axios';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
 
 export default function Register(){
     const Navi = useNavigate()
+    const [input, SetInput] = useState({})
+    const Submit = (e) => {
+        e.preventDefault();
+        let id = input['email']
+        let passwd = input['passwd']
+        if (id.length <= 6 || passwd.length <= 8){
+            return
+          }
+        axios.post('http://localhost:4000/register',input,{withCredentials:true}).then((response) => {
+        switch (response.data.status){
+            case -1:
+                alert('ちゃんと確認してください')
+                break
+            default:
+                Navi('/login')
+        }
+
+    })
+    }
+    const HandleChange = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        SetInput(values =>({...values, [name]: value}) )
+    }
     return(
-        <section className="bg-[#F4F7FF] py-20 h-screen flex justify-center items-center">
+        <form onSubmit={(e) => Submit(e)} className="bg-[#F4F7FF] py-20 h-screen flex justify-center items-center">
       <div
         className="
               w-[525px]
@@ -36,11 +62,89 @@ export default function Register(){
         whitespace-nowrap
         items-center
         space-x-2
+        mb-2
         ">
-          <h4>
+          <h4 className="
+          w-28
+          ">
             Eメール
           </h4>
           <input
+          onChange={(e) => HandleChange(e)}
+          name = "email"
+          className="
+        w-full
+        rounded-md
+        border
+        bordder-[#E9EDF4]
+        py-3
+        px-5
+        bg-[#FCFDFE]
+        text-base text-body-color
+        placeholder-[#ACB6BE]
+        outline-none
+        focus-visible:shadow-none
+        focus:border-blue-500
+        "
+          required
+          type="email"
+          placeholder="Eメールを入力してください"
+        ></input>
+        </div>
+        <div className="
+        bg-slate-200
+        rounded-xl
+        p-2
+        flex
+        whitespace-nowrap
+        items-center
+        space-x-2
+        mb-2
+        ">
+          <h4 className="
+          w-28
+          ">
+            パスワード
+          </h4>
+          <input
+          onChange={(e) => HandleChange(e)}
+          name="passwd"
+          className="
+        w-full
+        rounded-md
+        border
+        bordder-[#E9EDF4]
+        py-3
+        px-5
+        bg-[#FCFDFE]
+        text-base text-body-color
+        placeholder-[#ACB6BE]
+        outline-none
+        focus-visible:shadow-none
+        focus:border-blue-500
+        "
+          required
+          type="password"
+          placeholder="パスワードを入力してください"
+        ></input>
+        </div>
+        <div className="
+        bg-slate-200
+        rounded-xl
+        p-2
+        flex
+        whitespace-nowrap
+        items-center
+        space-x-2
+        ">
+          <h4 className="
+          w-28
+          ">
+            あだ名
+          </h4>
+          <input
+          onChange={(e) => HandleChange(e)}
+          name="nickname"
           className="
         w-full
         rounded-md
@@ -57,12 +161,13 @@ export default function Register(){
         "
           required
           type="text"
-          placeholder="Eメールを入力してください"
+          placeholder="あだ名を入力してください"
         ></input>
         </div>
 
         
         <button
+        type='submit'
           className="
         mt-8
         border
@@ -71,7 +176,6 @@ export default function Register(){
         shadow-md
         hover:shadow-inner
         "
-        onClick={() => Navi('/login')}
         >
           送信
         </button>
@@ -292,7 +396,7 @@ export default function Register(){
           </svg>
         </span>
       </div>
-    </section>
+    </form>
 
     )
 }
