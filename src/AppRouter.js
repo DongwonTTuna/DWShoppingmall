@@ -6,6 +6,7 @@ import NoMatch from './Component/NotFound/NotFound';
 import ViewProduct from './Component/Product/ViewProduct'
 import ForgotPW from './Component/User/ForgotPW'
 import Register from './Component/User/Register'
+import Mypage from './Component/User/Mypage'
 
 
 export default function AppRouter(){
@@ -18,6 +19,7 @@ export default function AppRouter(){
         <Route path="login" element={<Login />} />
         <Route path="/login/resetpassword" element={<ForgotPW />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/mypage" element={<Mypage />} />
         <Route path="*" element={<NoMatch />}/>
     </Routes>
     </BrowserRouter>

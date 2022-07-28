@@ -1,7 +1,9 @@
+/*Require Mysql 8*/
+
 drop database if exists dongwonmall;
-DROP USER dongwon@localhost;
+drop user dongwon@localhost;
 create database dongwonmall default character set utf8 collate utf8_general_ci;
-create user 'dongwon'@'localhost' identified WITH mysql_native_password by 'thisisadminpassword';
+create user 'dongwon'@'localhost' identified with mysql_native_password by 'thisisadminpassword';
 grant all on dongwonmall.* to 'dongwon'@'localhost';
 use dongwonmall;
 
@@ -31,22 +33,3 @@ create table product(
 
 insert into login_table values(null, 'ttuna0790@gmail.com', 'thisismypassword', 'ピーナツ', null, null);
 insert into user_detail values(null, null,null,null);
-
-DELIMITER $$
-DROP PROCEDURE IF EXISTS Regestoration $$
-CREATE PROCEDURE Regestoration (
-    loginid varchar(255),
-    passwd varchar(255),
-    nickname varchar(255),
-    email varchar(255),
-)
-BEGIN
-END$$
-DELIMITER ;
-DELIMITER $$
-DROP PROCEDURE IF EXISTS GetLogin $$
-CREATE PROCEDURE GetLogin(
-    loginid varchar(255),
-    passwd varchar(255),
-)
-DELIMITER ;

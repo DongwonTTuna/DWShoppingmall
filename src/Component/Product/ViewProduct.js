@@ -3,7 +3,7 @@ import Nav from '../Nav'
 export default function ViewProduct(){
     const item = [
         {
-           Name: 'ちくわ',
+           Name: 'c',
            Desc: '説明'
         },
         {

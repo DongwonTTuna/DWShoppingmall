@@ -10,9 +10,13 @@ export default function Register(){
         e.preventDefault();
         let id = input['email']
         let passwd = input['passwd']
-        if (id.length <= 6 || passwd.length <= 8){
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%])[A-Za-z0-9!@#$%]{9,}$/
+        if (id.length <= 6){
             return
           }
+        if (!regex.test(passwd)){
+            return alert('パスワードをチェックしてください')
+        }
         axios.post('http://localhost:4000/register',input,{withCredentials:true}).then((response) => {
         switch (response.data.status){
             case -1:
@@ -50,8 +54,11 @@ export default function Register(){
         <div
         className='
         mb-10
-        '>
+        '>ß
         <h4>各欄にご記入ください。</h4>
+        <br></br>
+        <h4>パスワード : a-z 1文字以上、A-Z 1文字以上<br />[!@#$%]の中で1文字以上、数字1文字以上
+        </h4>
         </div>
 
         <div className="

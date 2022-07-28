@@ -10,7 +10,6 @@ export default function Login() {
   const Nav = useNavigate()
   const [,setCookie,] = useCookies(["login"])
   const [rememberID, setRememberID] = useState(false)
-  const [toggle,setToggle] = useState(false)
   
 
   const DoLogin = () => {
@@ -26,16 +25,15 @@ export default function Login() {
       .then((response) => {
         switch (response.data.status) {
           case 1:
-            Object.assign(response.data.data,{'password': passwd})
-            console.log(response.data.data)
+            Object.assign(response.data.data,{'passwd': passwd})
             setCookie("login", response.data.data,{path:'/',maxAge: 7200, sameSite:'strict'});
-            if (toggle){
+            console.log(rememberID)
+            if (rememberID){
               localStorage.setItem("rememberlogin", id)
             } else{
               localStorage.removeItem("rememberlogin")
             }
-            
-            Nav("/");
+            window.location.href = 'http://localhost:3000/';
             break;
           default:
             break;
@@ -43,21 +41,14 @@ export default function Login() {
       });
   };
 
-  const ToggleRemember = () => {
-    setRememberID(!rememberID);
-  }
-
-  const ToggleRememberMe = () => {
-    setToggle(!toggle)
-  }
 
   useEffect(()=> {
     const a = localStorage.getItem("rememberlogin")
     if (a !== null){
-      setToggle(true)
+      document.getElementById('ab').setAttribute("checked", "true");
       setId(a)
+      setRememberID(true)
     }
-
   },[])
 
   return (
@@ -138,7 +129,7 @@ export default function Login() {
             </div>
             <div className="flex justify-between my-6">
               <div className="text-[#adadad] hover:text-black ">
-                <label><input type="Checkbox" onClick={() => ToggleRememberMe()} onChange={() => ToggleRemember()} checked={toggle} className="mr-4" />
+                <label><input type="Checkbox" onClick={() =>  setRememberID(!rememberID)} id='ab' className="mr-4" />
               IDを覚える</label>
               </div>
               <div
