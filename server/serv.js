@@ -26,7 +26,7 @@ serv.post("/login", (req, res) => {
         return
       }
     con.query('SELECT * FROM login_table WHERE loginid = "' + req.body.email + '" AND passwd= "' + req.body.passwd + '"',(err,results) =>{
-        if (err) return res.send(err)
+        if (err) throw err
         if (results.length === 0){
             return res.send({status : -1})
         }
@@ -43,12 +43,12 @@ serv.post("/register", (req, res) => {
         return
       }
     con.query('SELECT * FROM login_table WHERE loginid = "' + email + '"', (err,results) => {
-        if (err) return res.send(err)
+        if (err) throw err
         if (results.length !== 0){
             return res.send({status : -1})
             }
         con.query('INSERT INTO login_table (loginid, passwd, nickname) VALUES("' + email + '","' + passwd + '","'+ nickname+'")',(err, results) =>{
-            if (err) return res.send(err)
+            if (err) throw err
             con.query('insert into user_detail values(null, null,null,null)',(err,results) =>{
                 if (err) throw err
                 res.send({status : 1})
@@ -62,7 +62,7 @@ serv.post('/mypage', (req, res) => {
     let passwd = req.body['passwd']
     let nickname = req.body['nickname']
     con.query('SELECT * FROM login_table WHERE id = "' + id + '" AND loginid = "' + email + '" AND passwd = "' + passwd + '" AND nickname = "' + nickname + '"', (err, results) => {
-        if (err) return res.send({status: -1, err: err})
+        if (err) throw err
         if (results.length===0) return res.send({status : -1})
         let data = req.body['data']
         id = data['id']
@@ -70,10 +70,27 @@ serv.post('/mypage', (req, res) => {
         passwd = data['passwd']
         nickname = data['nickname']
         con.query('UPDATE login_table SET loginid="'+ email + '", passwd="'+ passwd + '", nickname="'+ nickname + '" WHERE id = ' + id, (err, results) => {
-            if (err) return res.send(err)
+            if (err) throw err
             res.send({status : 1, data: {'id' : id, 'email': email, 'nickname' : nickname} })
         })    
     })
-    
+})
+
+serv.post('/deleteaccount', (req, res) => {
+    const id = req.body['id']
+    const email = req.body['email']
+    const passwd = req.body['passwd']
+    const nickname = req.body['nickname']
+    con.query('SELECT * FROM login_table WHERE id = ' + id + ' AND loginid = "' + email + '" AND passwd= "' + passwd + '" AND nickname = "' + nickname + '"',(err,results) =>{
+        if (err) throw err
+        if (results.length === 0){
+            return res.send({status : -1})
+        }
+        con.query('DELETE FROM login_table WHERE id =' + id , (err,results) => {
+            if (err) throw err
+            return res.send({status : 1})
+        })
+    })
+
 })
 serv.listen(port, () => console.log(`正常に稼働されました！`));

@@ -17,10 +17,12 @@ create table login_table(
 );
 
 create table user_detail(
-    id int auto_increment primary key,
+    id int auto_increment,
+    loginid varchar(255) not null,
     cart varchar(999), 
     orderlist varchar(999),
-    order_price varchar(999)
+    order_price varchar(999),
+    primary key (id, loginid)
 );
 
 

@@ -6,14 +6,11 @@ export function Features() {
         <div className="px-10 py-24 mx-auto max-w-7xl">
           <div className="w-full mx-auto text-left md:text-center">
             <h1 className="mb-6 text-5xl font-extrabold leading-none max-w-5xl mx-auto tracking-normal text-gray-900 sm:text-6xl md:text-6xl lg:text-7xl md:tracking-tight">
-              {" "}
-              ウェブ通販のように購入し
-              <br />
               <span className="w-full text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 lg:inline">
                 ウェブサイト
               </span>
-              を依頼する
-              <br />{" "}
+              を依頼する<br />
+              新しいやり方
             </h1>
           </div>
         </div>
@@ -116,7 +113,7 @@ export function Features() {
                   <rect x="3" y="4" width="18" height="16" rx="2"></rect>
                 </svg>
               </div>
-              <h4 className="text-xl font-medium text-gray-700">DEVツール</h4>
+              <h4 className="text-xl font-medium text-gray-700">開発ツール</h4>
               <p className="text-base text-center text-gray-500">
                 ウェブページの状況を一目に確認できるツールを提供いたします。
               </p>
