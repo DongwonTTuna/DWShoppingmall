@@ -15,8 +15,8 @@ export default function AppRouter(){
     <BrowserRouter>
     <Routes>
         <Route path="/" element={<App/>} />
-        <Route path="products" element={<ViewProduct />} />
-        <Route path="login" element={<Login />} />
+        <Route path="/products" element={<ViewProduct />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/login/resetpassword" element={<ForgotPW />} />
         <Route path="/register" element={<Register />} />
         <Route path="/mypage" element={<Mypage />} />

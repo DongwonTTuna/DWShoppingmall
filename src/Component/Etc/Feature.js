@@ -10,7 +10,7 @@ export function Features() {
                 ウェブサイト
               </span>
               を依頼する<br />
-              新しいやり方
+              新しい方法
             </h1>
           </div>
         </div>

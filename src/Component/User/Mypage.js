@@ -29,7 +29,7 @@ export default function Mypage() {
     let passwd = Passwd;
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%])[A-Za-z0-9!@#$%]{9,}$/
     if (!regex.test(passwd)){
-        return alert('パスワードをチェックしてください')
+        return alert('パスワードを確認してください')
     }
     axios
       .post("http://localhost:4000/mypage", {

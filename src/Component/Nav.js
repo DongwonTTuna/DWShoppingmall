@@ -56,7 +56,7 @@ export default function Navi() {
           </div>
           
           <div className="absolute bottom-2 flex  space-x-4 flex-row">
-            <button onClick={() => Nav('mypage')} className="bg-gray-200 p-2 rounded-md ml-2">
+            <button onClick={() => Nav('/mypage')} className="bg-gray-200 p-2 rounded-md ml-2">
               Mypage
             </button>
             <button

@@ -27,7 +27,7 @@ export default function ForgotPW() {
         p-2
         ">
           <h4>
-            送信したEメールの方に<br></br>パスワード再設定のリンクが送られます
+            Eメールの方に<br></br>パスワード再設定のリンクが送られます
           </h4>
         </div>
 
